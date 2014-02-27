@@ -67,7 +67,8 @@ module.exports = function(grunt) {
                     'module',
                     'console',
                     'jasmine',
-                    'dimple'
+                    'dimple',
+                    'define'
                 ]
             }
         },
