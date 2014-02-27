@@ -90,12 +90,12 @@ module.exports = function(grunt) {
         karma: {
             options: {
                 basepath: '',
-                frameworks: ['jasmine'],
+                frameworks: ['jasmine', 'requirejs'],
                 files: [
-                    'lib/d3.v3.min.js',
+                    'test/test-main.js',
+                    'node_modules/d3/d3.js',
                     'tmp/*.js',
-                    'test/**/*.spec.js',
-                    'test/*.spec.js'
+                    'test/**/*.spec.js'
                 ],
                 reporters: ['progress'],
                 port: 9876,
