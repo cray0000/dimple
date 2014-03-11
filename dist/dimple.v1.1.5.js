@@ -1,18 +1,31 @@
 // Copyright: 2013 PMSI-AlignAlytics
 // License: "https://github.com/PMSI-AlignAlytics/dimple/blob/master/MIT-LICENSE.txt"
 // Source: /src/objects/begin.js
+"use strict";
 
-// Create the stub object
-var dimple = {
-    version: "1.1.5",
-    plot: {},
-    aggregateMethod: {}
-};
+// AMD support for RequireJs
+(function (root, dimple) {
 
-// Wrap all application code in a self-executing function
-(function () {
-    "use strict";
+    if (typeof exports === "object") {
+        // CommonJS
+        module.exports = dimple(require('d3'));
+    } else if (typeof define === "function" && define.amd) {
+        // d3 does not register itself within the global namespace if it detects AMD
+        // yet dimple relies on d3's availability globally.
+        define(["d3"], function (d3) {
+            return (root.dimple = dimple(d3));
+        });
+    } else {
+        root.dimple = dimple(root.d3);
+    }
+}(this, function (d3) {
 
+    // Create the stub object
+    var dimple = {
+        version: "1.1.5",
+        plot: {},
+        aggregateMethod: {}
+    };
 
     // Copyright: 2013 PMSI-AlignAlytics
     // License: "https://github.com/PMSI-AlignAlytics/dimple/blob/master/MIT-LICENSE.txt"
@@ -476,7 +489,7 @@ var dimple = {
         // Copyright: 2013 PMSI-AlignAlytics
         // License: "https://github.com/PMSI-AlignAlytics/dimple/blob/master/MIT-LICENSE.txt"
         // Source: /src/objects/chart/methods/_axisIndex.js
-        // Return the ordinal value of the passed axis.  If an orientation is passed, return the order for the 
+        // Return the ordinal value of the passed axis.  If an orientation is passed, return the order for the
         // specific orientation, otherwise return the order from all axes.  Returns -1 if the passed axis isn't part of the collection
         this._axisIndex = function (axis, orientation) {
 
@@ -648,7 +661,7 @@ var dimple = {
                         }
                         // Add a key
                         key = aggField.join("/") + "_" + xField.join("/") + "_" + yField.join("/") + "_" + zField.join("/");
-                        // See if this field has already been added. 
+                        // See if this field has already been added.
                         for (k = 0; k < returnData.length; k += 1) {
                             if (returnData[k].key === key) {
                                 foundIndex = k;
@@ -1278,7 +1291,7 @@ var dimple = {
                     gridSize = -chartWidth;
                 }
                 // Draw the axis
-                // This code might seem unneccesary but even applying a duration of 0 to a transition will cause the code to execute after the 
+                // This code might seem unneccesary but even applying a duration of 0 to a transition will cause the code to execute after the
                 // code below and precedence is important here.
                 handleTrans = function (ob) {
                     var returnObj;
@@ -2037,7 +2050,7 @@ var dimple = {
             this.chart.axes.forEach(function (axis) {
                 if (axis.position === "x" && !this.x.hidden) {
                     if (axis === this.x) {
-                        // Set the y co-ordinate for the x axis 
+                        // Set the y co-ordinate for the x axis
                         if (xIndex === 0) {
                             coord.y = firstOrig.y;
                         } else if (xIndex === 1) {
@@ -2047,7 +2060,7 @@ var dimple = {
                     xIndex += 1;
                 } else if (axis.position === "y" && !this.y.hidden) {
                     if (axis === this.y) {
-                        // Set the x co-ordinate for the y axis 
+                        // Set the x co-ordinate for the y axis
                         if (yIndex === 0) {
                             coord.x = firstOrig.x;
                         } else if (yIndex === 1) {
@@ -4434,22 +4447,7 @@ var dimple = {
         return selectedShape.append("svg").attr("width", width).attr("height", height);
     };
 
+    return dimple;
 
-}());
+}));
 // End dimple
-
-// AMD support for RequireJs
-(function (globalContext) {
-    "use strict";
-
-    if (typeof define === "function" && define.amd) {
-        // d3 does not register itself within the global namespace if it detects AMD
-        // yet dimple relies on d3's availability globally.
-        define("dimple", ["d3"], function (d3) {
-            // register d3 in the global namespace so that dimple can use it
-            globalContext.d3 = d3;
-            // return the dimple object as the module
-            return globalContext.dimple;
-        });
-    }
-}(this));
