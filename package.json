@@ -8,6 +8,7 @@
       "url": "https://github.com/PMSI-AlignAlytics/dimple/blob/master/MIT-LICENSE.txt"
     }
   ],
+  "main": "dist/dimple.v1.1.5.min.js",
   "dependencies": {
     "d3": "3.x"
   },
